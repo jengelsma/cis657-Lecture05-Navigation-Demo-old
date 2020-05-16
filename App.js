@@ -1,11 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import ProfileScreen from './screens/ProfileScreen';
+import ProfileEditScreen from './screens/ProfileEditScreen';
 
 export default function App() {
+
+  const Stack = createStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+        />
+        <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
