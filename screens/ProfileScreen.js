@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
+import { Feather } from '@expo/vector-icons';
+
 const ProfileScreen = ({ route,navigation }) => {
 
   console.log("Profile rendered with ", route.params);
@@ -27,6 +29,20 @@ const ProfileScreen = ({ route,navigation }) => {
     }
   }, [route.params?.name, route.params?.imageUrl, route.params?.description]);
 
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('ProfileEdit', {
+            name, imageUrl, description
+          })
+        }
+      >
+        <Feather style={{ marginRight: 10 }} name="edit" size={24} />
+      </TouchableOpacity>
+    ),
+  });
+
   return (
     <View>
       <Card
@@ -40,13 +56,6 @@ const ProfileScreen = ({ route,navigation }) => {
           {description}
         </Text>
       </Card>
-      <Button
-        title="Go to Edit Profile"
-        onPress={() => navigation.navigate(
-          'ProfileEdit',
-          {name, imageUrl, description}
-        )}
-      />
     </View>
   );
 };

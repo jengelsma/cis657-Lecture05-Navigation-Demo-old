@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import { Feather } from '@expo/vector-icons';
 
 const ProfileEditScreen = ({route, navigation}) => {
 
@@ -11,7 +12,28 @@ const ProfileEditScreen = ({route, navigation}) => {
   const [imageUrl, setImageUrl] = useState(initialImageUrl);
   const [description, setDescription] = useState(initialDescription);
 
-  console.log('ProfileEdit: ', imageUrl);
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <Text> Cancel </Text>
+      </TouchableOpacity>
+    ),
+    headerLeft: () => (
+      <TouchableOpacity
+        onPress={() => {
+          // navigate back with new settings.
+          navigation.navigate('Profile', {
+            name,
+            imageUrl,
+            description
+          });
+        }}
+      >
+        <Text> Save </Text>
+      </TouchableOpacity>
+    ),
+  });
+
   return (
     <View>
       <Input 
@@ -30,13 +52,6 @@ const ProfileEditScreen = ({route, navigation}) => {
         onChangeText={setDescription}
         multiline={true}
       />
-      <Button 
-        title='Save Changes'
-        onPress={() => {
-          navigation.navigate(
-            'Profile', {name, imageUrl, description}
-            );
-        }}/>
     </View>
   );
 };
